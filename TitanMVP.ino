@@ -98,12 +98,23 @@ void loop() {
     if (aaWorld.y >= 0) {
       // Serial.println(aaWorld.y);
     }
-    Serial.print("Roll: ");
-    Serial.println(ypr[2] * 180 / M_PI);
+
     // code plan
     // we want to calculate when the user is ready to throw a punch
     // using x rotation (roll) we can determine if the users hands are
     // horizontal enough to throw a punch then we calculate acceleration
     // roll data  +- 90 degrees
+
+    int roll = ypr[2] * 180 / M_PI;
+    if (roll >= 60) {
+      // Serial.println("High guard)");
+    } else if (roll > 0 && roll <= 60) {
+      // Serial.println("Mid guard");
+
+      // ready to detect punches here
+
+    } else {
+      // Serial.println("Hands are down");
+    }
   }
 }
