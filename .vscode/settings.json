@@ -1,5 +1,10 @@
 {
     "editor.defaultFormatter": "xaver.clang-format",
     "editor.formatOnSave": true,
-    "clang-format.executable": "/usr/local/bin/clang-format"
+    "clang-format.executable": "/usr/local/bin/clang-format",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    }
 }

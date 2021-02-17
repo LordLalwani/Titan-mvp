@@ -107,14 +107,14 @@ void loop() {
 
     int roll = ypr[2] * 180 / M_PI;
     if (roll >= 60) {
-      // Serial.println("High guard)");
+      Serial.println("High guard)");
     } else if (roll > 0 && roll <= 60) {
-      // Serial.println("Mid guard");
-
+      Serial.println("Mid guard");
+      Serial.println(aaWorld.y);
       // ready to detect punches here
 
     } else {
-      // Serial.println("Hands are down");
+      Serial.println("Hands are down");
     }
   }
 }
