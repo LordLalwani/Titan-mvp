@@ -1,36 +1,46 @@
 import serial
+import json
+import time
+from datetime import datetime
 
-arduino_port = "/dev/cu.usbmodem141201"  # serial port of Arduino
-baud = 115200  # arduino uno runs at 9600 baud
-fileName = "./logs/datalog.csv"  # name of the CSV file generated
+sampleDataTimerLimitInSeconds = float(input(
+    "How long do you want to collect data for (seconds)?: "))
 
-ser = serial.Serial(arduino_port, baud)
-print("Connected to Arduino port:" + arduino_port)
+# Reads config
+with open('/Users/s121003/Documents/Arduino/TitanMVP/.vscode/arduino.json') as f:
+    arduinoData = json.load(f)
+
+# connect to serial port
+ser = serial.Serial(arduinoData['port'], arduinoData["baudRate"])
+
+# creates data log file based on current date time
+fileName = "./logs/"+datetime.now().strftime("%d-%m-%Y-%H:%M:%S") + ".csv"
 file = open(fileName, "a")
 print("Created file")
 
-# display the data to the terminal
+# read data from serial line
 getData = str(ser.readline().decode())
 data = getData[0:][:-2]
 
-# add the data to the file
-file = open(fileName, "w")  # append the data to the file
-file.write(data + "\\n")  # write data with a newline
-
-# close out the file
+# adds headers externally from sample data
+file = open(fileName, "w")
+file.write(data + "\n")
 file.close()
 
-samples = 20  # how many samples to collect
-print_labels = False
-line = 0  # start at 0 because our header is 0 (not real data)
-while line <= samples:
+# Starts a timer and collects data until timer reaches value of sampleDataTimerLimitInSeconds
+startTime = time.time()
+collectData = True
+
+while (collectData):
     getData = str(ser.readline().decode())
     data = getData[0:][:-2]
-    print(data)
-
     file = open(fileName, "a")
-    file.write(data + "\n")  # write data with a newline
-    line = line+1
+    file.write(data + "\n")
 
-print("Data collection complete!")
+    print(time.time() - startTime)
+    if(time.time() - startTime >= sampleDataTimerLimitInSeconds):
+        collectData = False
+
+
+print("\nData collection complete!")
 file.close()

@@ -1,5 +1,6 @@
 {
   "sketch": "TitanMVP/TitanMVP.ino",
   "port": "/dev/cu.usbmodem141201",
-  "board": "arduino:avr:uno"
+  "board": "arduino:avr:uno",
+  "baudRate": 115200
 }
