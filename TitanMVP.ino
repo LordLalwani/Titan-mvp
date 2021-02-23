@@ -95,10 +95,6 @@ void loop() {
     mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
     mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 
-    if (aaWorld.y >= 0) {
-      // Serial.println(aaWorld.y);
-    }
-
     // code plan
     // we want to calculate when the user is ready to throw a punch
     // using x rotation (roll) we can determine if the users hands are
@@ -107,14 +103,12 @@ void loop() {
 
     int roll = ypr[2] * 180 / M_PI;
     if (roll >= 60) {
-      Serial.println("High guard");
+      // Serial.println("High guard");
     } else if (roll > 0 && roll <= 60) {
-      Serial.println("Mid guard");
+      // Serial.println("Mid guard");
       Serial.println(aaWorld.y);
-      // ready to detect punches here
-
     } else {
-      Serial.println("Hands are down");
+      // Serial.println("Hands are down");
     }
   }
 }
